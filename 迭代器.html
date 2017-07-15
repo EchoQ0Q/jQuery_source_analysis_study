@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>迭代器</title>
+</head>
+<body>
+
+<script>
+	/*
+	*	@param {obj} 循环对象、数组
+	*	@param {callback} 回调函数
+	*	@param {context} 支持传入上下文
+	*	@param {args} 支持传入参数
+	*/
+	function each(obj,callback,context,args){
+		var i = 0,
+			len = obj.length;
+		if(obj.constructor === Array){
+			for(; i < len; i++){
+				callback && callback(context||null,obj[i],args);
+			}
+		}else{
+			for(var item in obj){
+				callback && callback(context||null,obj[item],i,args);
+				i++;
+			}
+		}	
+	}
+
+	var aaa = [1,2,3],
+		bbb = {
+			0: 1,
+			1: 2,
+			2: 3
+		};
+	var checkFunc = (function(){
+		var checkObj = {
+			name: 'Echo',
+			eachCheck: function(){
+				each(bbb,function(context,item,key,args){
+					console.log(item+'_'+key+context.name+args);
+				},this,'...')
+			}
+		};
+		return checkObj;
+	})();
+
+	checkFunc.eachCheck();
+
+</script>
+	
+</body>
+</html>

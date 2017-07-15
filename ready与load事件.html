@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ready与load事件</title>
+	<script src="/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<script>
+		show('观察脚本加载的顺序')
+
+		$(document).ready(function(){
+			show('jquery ready事件')
+		});
+		
+		//测试加载
+		$(function(){
+		    show('脚本解析二')
+		})
+
+		window.addEventListener("load", function() {
+		    show('load事件回调')
+		}, false);
+
+		document.addEventListener("DOMContentLoaded", function() {
+		    show('DOMContentLoaded回调')
+		}, false);
+
+		show('脚本解析一')
+
+		//jQuery新版本已去除此事件
+		/*$(document).load(function(){
+			show('jquery load事件')
+		});*/
+
+		show('脚本解析三');
+
+		function show(content){
+			console.log(content);
+		}
+	</script>
+</body>
+</html>

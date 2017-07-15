@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>静态与实例方法共享设计</title>
+</head>
+<body>
+	
+
+	<script>
+		var aQuery = function(selector){
+			return new aQuery.fn.init(selector);
+		}
+		aQuery.fn = aQuery.prototype = {
+			name: 'Echo',
+			init: function(selector){
+				this.selector = selector;
+				return this;
+			},
+			constructor: aQuery
+		}
+		$$ = aQuery.fn.init.prototype = aQuery.fn;
+
+		aQuery.fn.sayName = function(){
+			alert(this.name);
+		}
+		aQuery().sayName(); //实例方法
+		$$.sayName();    //静态方法
+	</script>
+</body>
+</html>

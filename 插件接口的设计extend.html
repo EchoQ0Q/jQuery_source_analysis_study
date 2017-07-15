@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>插件接口的设计extend</title>
+</head>
+<body>
+
+	<script>
+		var aQuery = function(selector){
+			return new aQuery.fn.init(selector);
+		}
+		aQuery.fn = aQuery.prototype = {
+			name: "Echo",
+			init: function(selector){
+				this.selector = selector;
+				return this;
+			}
+		}
+		$$ = aQuery.fn.init.prototype = aQuery.fn;
+
+		aQuery.extend = aQuery.fn.extend = function(){
+			var options, 
+				src, 
+				copy,
+				target = arguments[0] || {},
+				i = 1,
+				length = arguments.length;
+			//当只有一个参数时，即对aQuery自身的扩展处理
+			if(i === length){
+				target = this; //调用上下文对象aQuery或者实例
+				i--;
+			}	
+			for(;i<length;i++){
+				//从i开始取参，不为空开始遍历
+				if((options = arguments[i]) != null){
+					for(name in options){
+						copy = options[name];
+						//覆盖拷贝
+						target[name] = copy;
+					}
+				}
+			}
+			return target;
+		}
+
+		aQuery.fn.extend({
+			setAge: function(age){
+				this.age = age;
+				return this;
+			},
+			getAge: function(){
+				alert(this.age);
+				return this;
+			} 
+		})
+
+		aQuery().setAge(18).getAge();
+	</script>
+
+</body>
+</html>

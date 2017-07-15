@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象的构建</title>
+</head>
+<body>
+	<div id="aaron"></div>
+
+	<script type="text/javascript">
+		
+		//类一：
+		function ajQuery() {
+		  this.name = 'jQuery';
+		  this.sayName = function() {
+		    return this.name
+		  }
+		}
+		var a = new ajQuery()
+		var b = new ajQuery()
+		var c = new ajQuery()
+		 
+		// 类二
+		function ajQuery() {
+		    this.name = 'jQuery'
+		}
+		ajQuery.prototype = {
+		    sayName: function() {
+		    return this.name
+		    }
+		}
+		var a = new ajQuery()
+		var b = new ajQuery()
+		var c = new ajQuery()
+
+
+		// jQuery的写法
+		var $jQuery = function(selector, context) {
+		  return new $jQuery.fn.init(selector, context);
+		}
+
+		$jQuery.fn = $jQuery.prototype = {
+		  init: function() {
+		    this.name = 'aaron'
+		    return this;
+		  },
+		  constructor: $jQuery
+		}
+
+		var $a = $jQuery();
+
+		show('$jQuery的调用');
+		show($a);
+
+		function show(content){
+			console.log(content);
+		}
+
+	</script>
+</body>
+</html>

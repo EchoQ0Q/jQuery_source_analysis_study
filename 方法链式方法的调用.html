@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>链式方法的调用</title>
+</head>
+<body>
+	
+
+	<script>
+		var aQuery = function(selector){
+			return aQuery.fn.init(selector);
+		}
+		aQuery.fn = aQuery.prototype = {
+			name: 'Echo',
+			init:  function(selector){
+				this.selector = selector;
+				return this;
+			},
+			constructor: aQuery
+		}
+
+		$$ = aQuery.fn.init.prototype = aQuery.fn;
+
+		aQuery.fn.sayName = function(){
+			alert(this.name);
+			return this; //链式调用
+		}
+
+		aQuery.fn.setAge = function(age){
+			this.age = age;
+			return this; //链式调用
+		}
+
+		aQuery.fn.sayAge = function(){
+			alert(this.age);
+			return this; //链式调用
+		}
+
+		aQuery().setAge(18).sayAge();
+
+	</script>
+</body>
+</html>
