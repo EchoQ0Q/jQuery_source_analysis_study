@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回调的灵活运用</title>
+</head>
+<body>
+    <script>
+        function Aaron(list,callback){
+            var task;
+            if(task = list.shift()){
+                task();//执行函数
+            }
+            if(list.length>0){
+                arguments.callee(list,callback);
+            }else{
+                callback && callback();
+            }
+        }
+        Aaron([
+            function(){
+                alert('1');
+            },
+            function(){
+                alert('2');
+            }
+        ],function(){
+            alert('报告完毕！');
+        })
+    </script>    
+
+</body>
+</html>

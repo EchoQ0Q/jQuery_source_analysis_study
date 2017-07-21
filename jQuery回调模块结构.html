@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery回调模块结构</title>
+</head>
+<body>
+    <script>
+        /* var optionCache = {},
+            strReg=/\S+/g;
+
+        function show(data){
+            if(typeof data == 'object'){
+                for(var item in data){
+                    console.log('key->'+item,'value->'+data[item]);
+                }
+            }else{
+                console.log(data)
+            }
+        }
+
+        function createOption(options){
+            var object = optionCache[option] = {};
+            options.match(strReg).forEach(function(item,key){
+                object[item] = true;
+            })
+            return object;
+        }
+
+        function callback(option){
+            var option = typeof option === 'string' ? (optionCache[option] || createOption(option)) : jQuery.extend({},option);
+            show(option);
+        } */
+
+        var callbacks = (function(){
+            var optionCache = {},
+                strReg = /\S+/g;
+
+            function show(data){
+                if(typeof data == 'object'){
+                    for(var item in data){
+                        console.log('key->'+item,'value->'+data[item]);
+                    }
+                }else{
+                    console.log(data)
+                }
+            }
+            function createOption(option){
+                var object = optionCache[option] = {};
+                option.match(strReg).forEach(function(item,key){
+                    object[item] = true;
+                })
+                return object;
+            }
+            return {
+                callback: function(option){
+                    var option = typeof option === 'string' ? (optionCache[option] || createOption(option)) : jQuery.extend({},option);
+                    show(option);
+                }
+            }
+                
+        })();
+        callbacks.callback('hi hello')
+        
+    </script>
+</body>
+</html>

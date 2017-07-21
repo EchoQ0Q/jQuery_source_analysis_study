@@ -15,15 +15,26 @@
 	*/
 	function each(obj,callback,context,args){
 		var i = 0,
-			len = obj.length;
+			len = obj.length,
+			value;
 		if(obj.constructor === Array){
 			for(; i < len; i++){
-				callback && callback(context||null,obj[i],args);
+				//callback && callback(context||null,obj[i],args);
+				callback && (value = callback.apply(context||null,obj[i],args));
+				//支持循环中退出
+				if(value === false){  
+					break;
+				}
 			}
 		}else{
 			for(var item in obj){
-				callback && callback(context||null,obj[item],i,args);
+				//callback && callback(context||null,obj[item],i,args);
+				callback && (value = callback(context||null,obj[item],i,args));
 				i++;
+				//支持循环中退出
+				if(value === false){
+					break;
+				}
 			}
 		}	
 	}
